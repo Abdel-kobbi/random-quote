@@ -9,12 +9,26 @@ function Quote() {
     const [quote, setQuote] = useState("");
     const [author, setAuthor] = useState("");
 
+    const colors = [
+        '#16a085',
+        '#27ae60',
+        '#2c3e50',
+        '#f39c12',
+        '#e74c3c',
+        '#9b59b6',
+        '#FB6964',
+        '#342224',
+        '#472E32',
+        '#BDBB99',
+        '#77B1A9',
+        '#73A857'
+    ];
+
     const fetchQuotes = async () => {
         try {
             const response = await fetch(URL);
             const data = await response.json();
-            setQuotes(data.quotes);
-            newQuote();
+            setQuotes(data?.quotes);
         } catch (err) {
             console.log(err);
         }
@@ -22,29 +36,35 @@ function Quote() {
 
     const newQuote = () => {
         const randomQuote = Math.floor(Math.random() * 102);
-        setQuote(quotes[randomQuote].quote)
-        setAuthor(quotes[randomQuote].author)
+        setQuote(quotes[randomQuote]?.quote);
+        setAuthor(quotes[randomQuote]?.author);
+
+        const randomColor = Math.floor(Math.random() * 12);
+        document.body.style.backgroundColor = colors[randomColor];
     }
 
     useEffect(() => {
         fetchQuotes();
     }, [])
 
-    console.log(quotes.length);
+    useEffect(() => {
+        newQuote();
+    }, [quotes])
+
 
     return (
-        <div id="quote-box" className='shadow p-5 '>
+        <div id="quote-box" className='shadow p-5 mw-100' style={{color:"white"}}>
             <div id="text" className="fw-bold">
                 <FaQuoteLeft />&nbsp;
                 <p className="d-inline-block">{quote}</p>
                 <div id="author" className='p-4 text-end'>
-                    {author}
+                    - {author}
                 </div>
             </div>
             <div id="new-quote" className='row align-items-center'>
                 <div className="col-6">
-                    <button className="btn fs-4 border me-2 "><FaTwitter /></button>
-                    <button className="btn fs-4 border"><FaTumblr /></button>
+                    <a href="twitter.com/intent/tweet" id="tweet-quote" target="_blank" className="btn fs-4 border me-2 "><FaTwitter style={{color:"white"}} /></a>
+                    <a href="" target="_blank" className="btn fs-4 border"><FaTumblr style={{color:"white"}} /></a>
                 </div>
                 <div className="col-6">
                     <button className="btn btn btn-primary" onClick={newQuote}>New quote</button>

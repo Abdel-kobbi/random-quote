@@ -5,3 +5,11 @@
   text-align: center;
 }
 
+#quote-box .quote-text {
+    text-align: center !important;
+    width: 450px !important;
+    height: auto !important;
+    clear: both !important;
+    font-weight: 500 !important;
+    font-size: 1.75em !important;
+}
